@@ -6,7 +6,7 @@ export default function CaseStudies() {
   return (
     <main style={{ padding: '2rem', color: '#ffffff', minHeight: '100vh' }}>
       <h2>Case Studies</h2>
-      <p>Introduce your team members here.</p>
+      <p>We will be updating these accordingly</p>
 
       {/* Return to Explore Menu */}
       <button
