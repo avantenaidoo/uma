@@ -11,7 +11,6 @@ const navButtonStyle = {
   transition: 'all 0.3s'
 };
 
-// Proper type for the store prop
 type Store = {
   enterVR: () => void;
 };
@@ -73,6 +72,14 @@ export default function Navbar({ store }: NavbarProps) {
           onClick={() => window.location.href = '/'}
         >
           Voice Recognition
+        </button>
+
+        {/* Donate button opens in a new window */}
+        <button
+          style={{ ...navButtonStyle, background: '#ff9900', border: 'none' }}
+          onClick={() => window.open('https://gogetfunding.com/uma-underwater-marine-agency/', '_blank')}
+        >
+          Donate
         </button>
       </nav>
 
