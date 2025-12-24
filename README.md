@@ -9,6 +9,7 @@ Welcome to **UMA (Underwater Marine Agency)**, a pioneering project focused on *
 - **Immersive Video Backgrounds**: Random underwater videos with smooth transitions.  
 - **3D VR Scene**: Experience underwater environments through a VR-enabled interface.  
 - **Voice Recognition Navigation**: Speak commands to navigate the site:
+- Click 'Voice Recognition' button to activate. Speak the below commands to navigate as needed:
   - `"home"` → Return to home page  
   - `"about"` → Navigate to About page  
   - `"services"` → Navigate to Services page  
