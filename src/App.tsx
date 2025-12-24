@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, useCallback, useMemo } from 'react'
-import { Routes, Route, useNavigate } from 'react-router-dom'
+import { Routes, Route, useNavigate, useLocation } from 'react-router-dom'
 import { Canvas } from '@react-three/fiber'
 import { XR, createXRStore } from '@react-three/xr'
 import Navbar from './Navbar'
@@ -109,7 +109,7 @@ function Home() {
       </p>
 
       <p style={{ fontSize: '1.4rem', maxWidth: '700px', marginBottom: '2rem', zIndex: 2 }}>
-        Voice Recognition - Speak commands like "Explore", "About", "Services", "home" , and more to navigate!
+        Voice Recognition - Speak commands like "Explore", "About", "Services", "home", and more to navigate!
       </p>
 
       <button
@@ -133,7 +133,10 @@ function Home() {
 
 export default function App() {
   const navigate = useNavigate()
+  const location = useLocation() // << TRACK CURRENT ROUTE
+  const [showFooter, setShowFooter] = useState(false)
 
+  // Speech Recognition (unchanged)
   useEffect(() => {
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
     if (!SpeechRecognition) return
@@ -161,16 +164,30 @@ export default function App() {
           alert('Please allow pop-ups for this site to open Donate page automatically.')
         }
       }
-
     }
 
     recognition.start()
     return () => recognition.stop()
   }, [navigate])
 
+  // Show footer only if user scrolls down
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowFooter(window.scrollY > 50)
+    }
+    window.addEventListener('scroll', handleScroll)
+
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  // Reset scroll & footer when route changes
+  useEffect(() => {
+    window.scrollTo(0, 0)
+    setShowFooter(false)
+  }, [location.pathname])
+
   return (
-    <div style={{ width: '100vw', minHeight: '100vh', fontFamily: 'system-ui' }}>
-      {/* Background Canvas (no pointer events) */}
+    <div style={{ width: '100vw', minHeight: '100vh', fontFamily: 'system-ui', overflowY: 'auto' }}>
       <Canvas
         style={{
           position: 'fixed',
@@ -182,7 +199,6 @@ export default function App() {
         <EmptyScene />
       </Canvas>
 
-      {/* UI Layer (clickable) */}
       <div style={{ position: 'relative', zIndex: 10 }}>
         <Navbar store={store} />
 
@@ -198,6 +214,22 @@ export default function App() {
           <Route path="/explore/sites" element={<Sites />} />
           <Route path="/explore/user-stories" element={<UserStories />} />
         </Routes>
+
+        <footer
+          style={{
+            position: 'relative',
+            width: '100%',
+            padding: '1.5rem',
+            background: 'rgba(0, 26, 51, 0.85)',
+            color: '#a0d8ef',
+            textAlign: 'center',
+            pointerEvents: 'all',
+            fontSize: '0.9rem',
+            display: showFooter ? 'block' : 'none'
+          }}
+        >
+          © 2025 Underwater Marine Agency | Preserving Our Oceans | Contact: info@uma-agency.com
+        </footer>
       </div>
     </div>
   )
