@@ -140,10 +140,10 @@ export default function App() {
     recognition.onresult = (event) => {
       const command = event.results[event.results.length - 1][0].transcript.toLowerCase()
 
-      if (command.includes('home')) navigate('/')
+      if (command.includes('home') || command.includes('exit')) navigate('/')
       if (command.includes('about')) navigate('/about')
       if (command.includes('services')) navigate('/services')
-      if (command.includes('explore')) navigate('/explore')
+      if (command.includes('explore') || command.includes('explore menu') || command.includes('return')) navigate('/explore')
       if (command.includes('meet the team')) navigate('/explore/meet-the-team')
       if (command.includes('research')) navigate('/explore/research')
       if (command.includes('case studies')) navigate('/explore/case-studies')
