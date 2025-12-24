@@ -108,6 +108,10 @@ function Home() {
         Underwater Marine Agency (UMA) – Pioneering underwater research since 2025.
       </p>
 
+      <p style={{ fontSize: '1.4rem', maxWidth: '700px', marginBottom: '2rem', zIndex: 2 }}>
+        Voice Recognition - Speak commands like "Explore", "About", "Services", and more to navigate!
+      </p>
+
       <button
         onClick={() => window.location.href = '/explore'}
         style={{
@@ -149,6 +153,15 @@ export default function App() {
       if (command.includes('case studies')) navigate('/explore/case-studies')
       if (command.includes('sites')) navigate('/explore/sites')
       if (command.includes('user stories')) navigate('/explore/user-stories')
+
+      if (command.includes('donate')) {
+        try {
+           window.open('https://gogetfunding.com/uma-underwater-marine-agency/', '_blank')
+        } catch {
+          alert('Please allow pop-ups for this site to open Donate page automatically.')
+        }
+      }
+
     }
 
     recognition.start()

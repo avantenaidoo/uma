@@ -57,10 +57,7 @@ export default function Navbar({ store }: NavbarProps) {
         </h1>
       </div>
 
-      <div
-        onClick={() => setMenuOpen(!menuOpen)}
-        className="hamburger"
-      >
+      <div onClick={() => setMenuOpen(!menuOpen)} className="hamburger">
         <span></span>
         <span></span>
         <span></span>
@@ -91,9 +88,10 @@ export default function Navbar({ store }: NavbarProps) {
           Enter VR
         </button>
 
+        {/* Fixed Voice Recognition button */}
         <button
           style={{ ...navButtonStyle, background: '#005f8f', border: 'none' }}
-          onClick={() => goTo('/')}
+          onClick={() => window.location.reload()}
         >
           Voice Recognition
         </button>
