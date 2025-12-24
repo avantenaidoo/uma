@@ -133,10 +133,10 @@ function Home() {
 
 export default function App() {
   const navigate = useNavigate()
-  const location = useLocation() // << TRACK CURRENT ROUTE
+  const location = useLocation()
   const [showFooter, setShowFooter] = useState(false)
 
-  // Speech Recognition (unchanged)
+  // Speech Recognition
   useEffect(() => {
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
     if (!SpeechRecognition) return
@@ -159,7 +159,7 @@ export default function App() {
 
       if (command.includes('donate')) {
         try {
-           window.open('https://gogetfunding.com/uma-underwater-marine-agency/', '_blank')
+          window.open('https://gogetfunding.com/uma-underwater-marine-agency/', '_blank')
         } catch {
           alert('Please allow pop-ups for this site to open Donate page automatically.')
         }
@@ -176,14 +176,15 @@ export default function App() {
       setShowFooter(window.scrollY > 50)
     }
     window.addEventListener('scroll', handleScroll)
-
+    handleScroll() // Initialize on mount
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  // Reset scroll & footer when route changes
+  // Reset scroll & footer when route changes (deferred)
   useEffect(() => {
     window.scrollTo(0, 0)
-    setShowFooter(false)
+    const timer = setTimeout(() => setShowFooter(false), 0)
+    return () => clearTimeout(timer)
   }, [location.pathname])
 
   return (
