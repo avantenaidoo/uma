@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/umalogo4.jpeg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>UMA - Underwater Marine Agency</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+
+    <script>
+      const exitBtn = document.getElementById('exit-vr-btn');
+      function toggleExit() {
+        if (document.fullscreenElement) {
+          if (exitBtn) exitBtn.style.display = 'block';
+        } else {
+          if (exitBtn) exitBtn.style.display = 'none';
+        }
+      }
+      document.addEventListener('fullscreenchange', toggleExit);
+      document.addEventListener('webkitfullscreenchange', toggleExit);
+      document.addEventListener('mozfullscreenchange', toggleExit);
+      document.addEventListener('MSFullscreenChange', toggleExit);
+    </script>
+  </body>
+</html>
