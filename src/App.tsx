@@ -165,7 +165,7 @@ export default function App() {
       if (command.includes('services')) navigate('/services')
 
       // Explore pages
-      if (command.includes('explore now') || command.includes('explore menu')) navigate('/explore')
+      if (command.includes('explore now') || command.includes('explore menu') || command.includes('explore')) navigate('/explore')
       if (command.includes('meet the team')) navigate('/explore/meet-the-team')
       if (command.includes('research') || command.includes('exploration')) navigate('/explore/research')
       if (command.includes('case studies')) navigate('/explore/case-studies')
