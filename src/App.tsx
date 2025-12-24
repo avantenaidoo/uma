@@ -228,7 +228,7 @@ export default function App() {
             display: showFooter ? 'block' : 'none'
           }}
         >
-          © 2025 Underwater Marine Agency | Preserving Our Oceans | Contact: info@uma-agency.com
+          © 2025 Underwater Marine Agency | Preserving Our Oceans | Contact: umainternational@icloud.com
         </footer>
       </div>
     </div>
