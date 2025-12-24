@@ -109,7 +109,7 @@ function Home() {
       </p>
 
       <p style={{ fontSize: '1.4rem', maxWidth: '700px', marginBottom: '2rem', zIndex: 2 }}>
-        Voice Recognition - Speak commands like "Explore", "About", "Services", and more to navigate!
+        Voice Recognition - Speak commands like "Explore", "About", "Services", "home" , and more to navigate!
       </p>
 
       <button
