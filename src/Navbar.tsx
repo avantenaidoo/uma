@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const navButtonStyle = {
   background: 'transparent',
@@ -9,18 +10,24 @@ const navButtonStyle = {
   cursor: 'pointer',
   borderRadius: '6px',
   transition: 'all 0.3s'
-};
+}
 
 type Store = {
-  enterVR: () => void;
-};
+  enterVR: () => void
+}
 
 interface NavbarProps {
-  store: Store;
+  store: Store
 }
 
 export default function Navbar({ store }: NavbarProps) {
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false)
+  const navigate = useNavigate()
+
+  const goTo = (path: string) => {
+    navigate(path)
+    setMenuOpen(false)
+  }
 
   return (
     <header
@@ -45,7 +52,9 @@ export default function Navbar({ store }: NavbarProps) {
           alt="Underwater Marine Agency Logo"
           style={{ height: '60px', marginRight: '1rem' }}
         />
-        <h1 style={{ margin: 0, fontSize: '1.8rem', fontWeight: 600 }}>Underwater Marine Agency</h1>
+        <h1 style={{ margin: 0, fontSize: '1.8rem', fontWeight: 600 }}>
+          Underwater Marine Agency
+        </h1>
       </div>
 
       <div
@@ -58,26 +67,45 @@ export default function Navbar({ store }: NavbarProps) {
       </div>
 
       <nav className={menuOpen ? 'nav-open' : ''}>
-        <button style={navButtonStyle} onClick={() => window.location.href = '/'}>Home</button>
-        <button style={navButtonStyle} onClick={() => window.location.href = '/about'}>About</button>
-        <button style={navButtonStyle} onClick={() => window.location.href = '/services'}>Services</button>
+        <button style={navButtonStyle} onClick={() => goTo('/')}>
+          Home
+        </button>
+
+        <button style={navButtonStyle} onClick={() => goTo('/about')}>
+          About
+        </button>
+
+        <button style={navButtonStyle} onClick={() => goTo('/services')}>
+          Services
+        </button>
+
+        {/* Explore — SAME STYLE AS OTHERS */}
+        <button style={navButtonStyle} onClick={() => goTo('/explore')}>
+          Explore
+        </button>
+
         <button
-          style={{ ...navButtonStyle, background: '#0077be', border: 'none' }}
+          style={{ ...navButtonStyle, background: '#00b7eb', border: 'none' }}
           onClick={() => store.enterVR()}
         >
           Enter VR
         </button>
+
         <button
-          style={{ ...navButtonStyle, background: '#00b7eb', border: 'none' }}
-          onClick={() => window.location.href = '/'}
+          style={{ ...navButtonStyle, background: '#005f8f', border: 'none' }}
+          onClick={() => goTo('/')}
         >
           Voice Recognition
         </button>
 
-        {/* Donate button opens in a new window */}
         <button
           style={{ ...navButtonStyle, background: '#ff9900', border: 'none' }}
-          onClick={() => window.open('https://gogetfunding.com/uma-underwater-marine-agency/', '_blank')}
+          onClick={() =>
+            window.open(
+              'https://gogetfunding.com/uma-underwater-marine-agency/',
+              '_blank'
+            )
+          }
         >
           Donate
         </button>
@@ -90,6 +118,7 @@ export default function Navbar({ store }: NavbarProps) {
           cursor: pointer;
           gap: 5px;
         }
+
         .hamburger span {
           width: 25px;
           height: 3px;
@@ -102,6 +131,7 @@ export default function Navbar({ store }: NavbarProps) {
             display: flex;
             order: 2;
           }
+
           nav {
             flex-direction: column;
             width: 100%;
@@ -109,14 +139,16 @@ export default function Navbar({ store }: NavbarProps) {
             margin-top: 1rem;
             order: 3;
           }
+
           nav.nav-open {
             display: flex;
           }
+
           nav button {
             margin: 0.5rem 0;
           }
         }
       `}</style>
     </header>
-  );
+  )
 }
