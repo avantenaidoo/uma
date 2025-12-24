@@ -14,7 +14,6 @@ Welcome to **UMA (Underwater Marine Agency)**, a pioneering project focused on *
   - `"about"` → Navigate to About page  
   - `"services"` → Navigate to Services page  
   - `"exit"` → Return to home or exit VR mode  
-  - Color commands like `"blue"`, `"cyan"`, `"navy"` change the background color dynamically.  
 - **Responsive Design**: Works on desktop and mobile with a collapsible navigation menu.
 
 ---
