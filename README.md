@@ -5,7 +5,7 @@ Welcome to **UMA (Underwater Marine Agency)**, a pioneering project focused on *
 ---
 
 ## 🌊 Features
-
+- Deployed website at - https://uma.kesug.com/ 
 - **Immersive Video Backgrounds**: Random underwater videos with smooth transitions.  
 - **3D VR Scene**: Experience underwater environments through a VR-enabled interface.  
 - **Voice Recognition Navigation**: Speak commands to navigate the site:
@@ -15,25 +15,7 @@ Welcome to **UMA (Underwater Marine Agency)**, a pioneering project focused on *
   - `"services"` → Navigate to Services page  
   - `"exit"` → Return to home or exit VR mode  
 - **Responsive Design**: Works on desktop and mobile with a collapsible navigation menu.
+- VR mode currently not yet functional - this is ongoing under cnstruction.
 
 ---
 
-## 🚀 Getting Started
-
-### Prerequisites
-
-- Node.js (v18+ recommended)  
-- npm or yarn  
-- Modern browser (Chrome or Edge for voice recognition support)
-
-### Installation
-
-```bash
-# Clone the repo
-git clone https://github.com/your-username/uma.git
-cd uma
-
-# Install dependencies
-npm install
-# or
-yarn install
