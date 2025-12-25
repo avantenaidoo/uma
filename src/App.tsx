@@ -25,6 +25,7 @@ function EmptyScene() {
 }
 
 function Home() {
+  const navigate = useNavigate() // <-- added this
   const videoRef = useRef<HTMLVideoElement | null>(null)
 
   const videos = useMemo(
@@ -112,8 +113,9 @@ function Home() {
         Voice Recognition - Speak commands like "Explore", "About", "Services", "home", and more to navigate!
       </p>
 
+      {/* ✅ Corrected button */}
       <button
-        onClick={() => window.location.href = '/explore'}
+        onClick={() => navigate('/explore')} // <-- use navigate function
         style={{
           padding: '1rem 2.5rem',
           fontSize: '1.3rem',
@@ -226,7 +228,9 @@ export default function App() {
             textAlign: 'center',
             pointerEvents: 'all',
             fontSize: '0.9rem',
-            display: showFooter ? 'block' : 'none'
+            display: showFooter ? 'flex' : 'none',
+            alignItems: 'center',
+            justifyContent: 'center',
           }}
         >
           © 2025 Underwater Marine Agency | Preserving Our Oceans | Contact: umainternational@icloud.com
