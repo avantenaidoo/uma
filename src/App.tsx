@@ -25,7 +25,7 @@ function EmptyScene() {
 }
 
 function Home() {
-  const navigate = useNavigate() // <-- added this
+  const navigate = useNavigate()
   const videoRef = useRef<HTMLVideoElement | null>(null)
 
   const videos = useMemo(
@@ -80,11 +80,12 @@ function Home() {
         alignItems: 'center',
         color: '#ffffff',
         textAlign: 'center',
-        padding: '0 2rem',
-        position: 'relative'
+        padding: 0,
+        margin: 0,
+        position: 'relative',
       }}
     >
-      <h2 style={{ fontSize: '3.5rem', zIndex: 2 }}>
+      <h2 style={{ fontSize: '3.5rem', zIndex: 2, position: 'relative' }}>
         Exploring the Depths of Our Oceans
       </h2>
 
@@ -101,21 +102,20 @@ function Home() {
           objectFit: 'cover',
           opacity: fade ? 0 : 0.4,
           transition: 'opacity 1s ease',
-          zIndex: 1
+          zIndex: 1,
         }}
       />
 
-      <p style={{ fontSize: '1.4rem', maxWidth: '700px', marginBottom: '2rem', zIndex: 2 }}>
+      <p style={{ fontSize: '1.4rem', maxWidth: '700px', marginBottom: '2rem', zIndex: 2, position: 'relative' }}>
         Underwater Marine Agency (UMA) – Pioneering underwater research since 2025.
       </p>
 
-      <p style={{ fontSize: '1.4rem', maxWidth: '700px', marginBottom: '2rem', zIndex: 2 }}>
+      <p style={{ fontSize: '1.4rem', maxWidth: '700px', marginBottom: '2rem', zIndex: 2, position: 'relative' }}>
         Voice Recognition - Speak commands like "Explore", "About", "Services", "home", and more to navigate!
       </p>
 
-      {/* ✅ Corrected button */}
       <button
-        onClick={() => navigate('/explore')} // <-- use navigate function
+        onClick={() => navigate('/explore')}
         style={{
           padding: '1rem 2.5rem',
           fontSize: '1.3rem',
@@ -124,7 +124,8 @@ function Home() {
           border: 'none',
           borderRadius: '8px',
           cursor: 'pointer',
-          zIndex: 2
+          zIndex: 20,
+          position: 'relative',
         }}
       >
         Explore Now
@@ -172,17 +173,17 @@ export default function App() {
     return () => recognition.stop()
   }, [navigate])
 
-  // Show footer only if user scrolls down
+  // Show footer on scroll
   useEffect(() => {
     const handleScroll = () => {
       setShowFooter(window.scrollY > 50)
     }
     window.addEventListener('scroll', handleScroll)
-    handleScroll() // Initialize on mount
+    handleScroll()
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  // Reset scroll & footer when route changes (deferred)
+  // Reset scroll & footer on route change
   useEffect(() => {
     window.scrollTo(0, 0)
     const timer = setTimeout(() => setShowFooter(false), 0)
@@ -190,19 +191,21 @@ export default function App() {
   }, [location.pathname])
 
   return (
-    <div style={{ width: '100vw', minHeight: '100vh', fontFamily: 'system-ui', overflowY: 'auto' }}>
+    <div style={{ width: '100%', minHeight: '100vh', fontFamily: 'system-ui', overflowY: 'auto', margin: 0, padding: 0 }}>
+      {/* Canvas background */}
       <Canvas
         style={{
           position: 'fixed',
           inset: 0,
           background: '#001a33',
-          pointerEvents: 'none'
+          pointerEvents: 'none',
         }}
       >
         <EmptyScene />
       </Canvas>
 
-      <div style={{ position: 'relative', zIndex: 10 }}>
+      {/* All page content */}
+      <div style={{ position: 'relative', zIndex: 10, minHeight: '100vh', paddingBottom: '100px' }}>
         <Navbar store={store} />
 
         <Routes>
@@ -218,19 +221,23 @@ export default function App() {
           <Route path="/explore/user-stories" element={<UserStories />} />
         </Routes>
 
+        {/* Fixed footer */}
         <footer
           style={{
-            position: 'relative',
+            position: 'fixed',
+            bottom: 0,
+            left: 0,
             width: '100%',
+            boxSizing: 'border-box',
             padding: '1.5rem',
             background: 'rgba(0, 26, 51, 0.85)',
             color: '#a0d8ef',
+            fontSize: '0.9rem',
+            display: showFooter ? 'block' : 'none',
             textAlign: 'center',
             pointerEvents: 'all',
-            fontSize: '0.9rem',
-            display: showFooter ? 'flex' : 'none',
-            alignItems: 'center',
-            justifyContent: 'center',
+            zIndex: 50,
+            margin: 0,
           }}
         >
           © 2025 Underwater Marine Agency | Preserving Our Oceans | Contact: umainternational@icloud.com
