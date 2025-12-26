@@ -16,7 +16,7 @@ export default function About() {
     >
       <h2 style={{ fontSize: '3.5rem', marginBottom: '2rem' }}>About UMA</h2>
       <p style={{ fontSize: '1.4rem', maxWidth: '800px', lineHeight: 1.8 }}>
-        The Underwater Marine Agency (UMA) is dedicated to the preservation, research, and sustainable exploration of our world's oceans. Founded in 2025, we advanced/innovative technology, scientific expertise, and community engagement to protect marine ecosystems for future generations.
+        The Underwater Marine Agency (UMA) is dedicated to the preservation, research, and sustainable exploration of our world's oceans. Founded in 2025, we combine advanced/innovative technology, scientific expertise, and community engagement to protect marine ecosystems for future generations.
         <br /><br />
         Our mission includes deep-sea mapping, marine biodiversity studies, conservation initiatives, and public education programs. Through innovative VR experiences and voice-enabled tools, we bring the wonders of the underwater world to everyone.
       </p>
