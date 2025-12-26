@@ -137,9 +137,9 @@ function Home() {
 export default function App() {
   const navigate = useNavigate()
   const location = useLocation()
-  const [showFooter, setShowFooter] = useState(false)
+  const [footerVisible, setFooterVisible] = useState(false)
 
-  // Speech Recognition
+  // Speech Recognition (unchanged)
   useEffect(() => {
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
     if (!SpeechRecognition) return
@@ -173,21 +173,36 @@ export default function App() {
     return () => recognition.stop()
   }, [navigate])
 
-  // Show footer on scroll
+  // Show footer only when scrolled near bottom
   useEffect(() => {
     const handleScroll = () => {
-      setShowFooter(window.scrollY > 50)
+      const scrollPosition = window.scrollY + window.innerHeight
+      const documentHeight = document.documentElement.scrollHeight
+      
+      // Show when user is within ~150px of the bottom (adjust threshold as needed)
+      if (scrollPosition >= documentHeight - 150) {
+        setFooterVisible(true)
+      } else {
+        setFooterVisible(false)
+      }
     }
+
     window.addEventListener('scroll', handleScroll)
+    window.addEventListener('resize', handleScroll) // also check on resize
+    
+    // Initial check
     handleScroll()
-    return () => window.removeEventListener('scroll', handleScroll)
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+      window.removeEventListener('resize', handleScroll)
+    }
   }, [])
 
-  // Reset scroll & footer on route change
+  // Reset scroll position on route change
   useEffect(() => {
     window.scrollTo(0, 0)
-    const timer = setTimeout(() => setShowFooter(false), 0)
-    return () => clearTimeout(timer)
+    setFooterVisible(false) // hide footer immediately on navigation
   }, [location.pathname])
 
   return (
@@ -204,8 +219,8 @@ export default function App() {
         <EmptyScene />
       </Canvas>
 
-      {/* All page content */}
-      <div style={{ position: 'relative', zIndex: 10, minHeight: '100vh', paddingBottom: '100px' }}>
+      {/* All page content + footer at the end */}
+      <div style={{ position: 'relative', zIndex: 10 }}>
         <Navbar store={store} />
 
         <Routes>
@@ -221,23 +236,18 @@ export default function App() {
           <Route path="/explore/user-stories" element={<UserStories />} />
         </Routes>
 
-        {/* Fixed footer */}
+        {/* Footer - only shown when scrolled to bottom */}
         <footer
           style={{
-            position: 'fixed',
-            bottom: 0,
-            left: 0,
-            width: '100%',
-            boxSizing: 'border-box',
             padding: '1.5rem',
             background: 'rgba(0, 26, 51, 0.85)',
             color: '#a0d8ef',
             fontSize: '0.9rem',
-            display: showFooter ? 'block' : 'none',
             textAlign: 'center',
-            pointerEvents: 'all',
-            zIndex: 50,
-            margin: 0,
+            opacity: footerVisible ? 1 : 0,
+            transition: 'opacity 0.4s ease',
+            pointerEvents: footerVisible ? 'all' : 'none',
+            marginTop: '3rem', // breathing room from last content
           }}
         >
           © 2025 Underwater Marine Agency | Preserving Our Oceans | Contact: umainternational@icloud.com
