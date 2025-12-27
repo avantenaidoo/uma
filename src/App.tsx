@@ -66,8 +66,33 @@ function Home() {
   useEffect(() => {
     const videoEl = videoRef.current
     if (!videoEl) return
+
     videoEl.src = videos[currentVideo]
-    videoEl.play()
+
+    let playPromise: Promise<void> | undefined
+    try {
+      playPromise = videoEl.play()
+      if (playPromise !== undefined) {
+        playPromise.catch((err) => {
+          if (err instanceof Error && err.name === 'AbortError') {
+            return
+          }
+          console.error('Unexpected video play error:', err)
+        })
+      }
+    } catch (err: unknown) {
+      if (err instanceof Error && err.name === 'AbortError') {
+        return
+      }
+      console.error('Sync play error:', err)
+    }
+
+    return () => {
+      if (videoEl.src === videos[currentVideo]) {
+        videoEl.pause()
+      }
+      videoEl.src = ''
+    }
   }, [currentVideo, videos])
 
   return (
@@ -139,7 +164,6 @@ export default function App() {
   const location = useLocation()
   const [showFooter, setShowFooter] = useState(false)
 
-  // Speech Recognition
   useEffect(() => {
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
     if (!SpeechRecognition) return
@@ -173,17 +197,15 @@ export default function App() {
     return () => recognition.stop()
   }, [navigate])
 
-  // Show footer on scroll
   useEffect(() => {
     const handleScroll = () => {
       setShowFooter(window.scrollY > 50)
     }
-    window.addEventListener('scroll', handleScroll)
+    window.addEventListener('scroll', handleScroll, { passive: true })
     handleScroll()
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  // Reset scroll & footer on route change
   useEffect(() => {
     window.scrollTo(0, 0)
     const timer = setTimeout(() => setShowFooter(false), 0)
@@ -192,7 +214,6 @@ export default function App() {
 
   return (
     <div style={{ width: '100%', minHeight: '100vh', fontFamily: 'system-ui', overflowY: 'auto', margin: 0, padding: 0 }}>
-      {/* Canvas background */}
       <Canvas
         style={{
           position: 'fixed',
@@ -204,7 +225,6 @@ export default function App() {
         <EmptyScene />
       </Canvas>
 
-      {/* All page content */}
       <div style={{ position: 'relative', zIndex: 10, minHeight: '100vh', paddingBottom: '100px' }}>
         <Navbar store={store} />
 
@@ -221,7 +241,6 @@ export default function App() {
           <Route path="/explore/user-stories" element={<UserStories />} />
         </Routes>
 
-        {/* Fixed footer */}
         <footer
           style={{
             position: 'fixed',
@@ -249,7 +268,6 @@ export default function App() {
             style={{ color: '#a0d8ef', marginTop: '0.5rem', display: 'inline-block' }}
             aria-label="GitHub"
           >
-            {/* Minimal GitHub SVG */}
             <svg
               height="24"
               width="24"

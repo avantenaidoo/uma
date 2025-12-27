@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import { VitePWA } from 'vite-plugin-pwa';
+import path from 'path';
 
 export default defineConfig({
   plugins: [
@@ -18,6 +19,10 @@ export default defineConfig({
                 maxEntries: 20,
                 maxAgeSeconds: 60 * 60 * 24 * 30,
               },
+              cacheableResponse: {
+                statuses: [0, 200, 206],
+              },
+              rangeRequests: true,
             },
           },
           {
@@ -41,4 +46,17 @@ export default defineConfig({
       },
     }),
   ],
+
+  resolve: {
+    dedupe: ['three'],
+    alias: {
+      three: path.resolve('./node_modules/three'),
+      '@react-three/fiber': path.resolve('./node_modules/@react-three/fiber'),
+      '@react-three/xr': path.resolve('./node_modules/@react-three/xr'),
+    },
+  },
+
+  optimizeDeps: {
+    include: ['three'],
+  },
 });
